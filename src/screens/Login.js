@@ -1,120 +1,134 @@
 // Miguel Francisco da Silva Sales
 import React, { useState } from 'react';
-import { 
-    View, 
-    Text, 
-    ScrollView, 
-    TextInput, 
-    TouchableOpacity, 
-    StyleSheet, 
-    ImageBackground 
+import {
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
 } from 'react-native';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import app from '../../firebaseConfig';
+import { useNavigation } from '@react-navigation/native';
 
-const RealizarLogin = ({ navigation }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const RealizarLogin = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
-    const tentarLogin = () => {
-        const auth = getAuth(app);
-        signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                navigation.navigate('');
-            })
-            .catch((error) => {
-                console.error('Falha no login:', error);
-            });
-    };
+  const tentarLogin = () => {
+    if (email === '' && password === '') {
+      navigation.navigate('BoasVindas');
+    } else {
+      alert('Usuário não cadastrado!');
+    }
+  };
 
-    return (
-        <ImageBackground 
-            source={require('')} 
-            style={styles.background}
-            resizeMode="cover"
-        >
-            <ScrollView contentContainerStyle={styles.container}>
-                <Text style={styles.title}>Login</Text>
+  return (
+    <ImageBackground
+      source={require('../assets/9496474.png')}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.cardLogin}>
+          <Text style={styles.title}>LOGIN</Text>
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    placeholderTextColor="#aaa"
-                />
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            placeholderTextColor="#aaa"
+          />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="Senha"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                    placeholderTextColor="#aaa"
-                />
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholderTextColor="#aaa"
+          />
 
-                <TouchableOpacity style={styles.button} onPress={tentarLogin}>
-                    <Text style={styles.buttonText}>Entrar</Text>
-                </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={tentarLogin}>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
 
-                <Text style={styles.botCdastrar} onPress={() => navigation.navigate("UsuarioAdd")}> Cadastre-se!</Text>
-
-            </ScrollView>
-        </ImageBackground>
-    );
+          <TouchableOpacity onPress={() => navigation.navigate("")}>
+            <Text style={styles.botCadastrar}>Cadastre-se!</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </ImageBackground>
+  );
 };
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
-    },
-    container: {
-        flexGrow: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 20,
-        color: "#000",
-    },
-    input: {
-        width: "90%",
-        padding: 15,
-        marginBottom: 15,
-        borderWidth: 1,
-        borderRadius: 8,
-        borderColor: "#000",
-        backgroundColor: "rgba(9, 9, 19, 0.2)",
-        color: "#000",
-    },
-    button: {
-        backgroundColor: "#6FA6C5",
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        alignItems: "center",
-        width: "90%",
-    },
-    buttonText: {
-        color: "#fff",
-        fontWeight: "bold",
-        fontSize: 16,
-    },
-    botCdastrar: {
-        marginTop:20,
-        backgroundColor: "#6FA6C5",
-        color:"#fff",
-        padding:10,
-        borderRadius: 20,
-        
-    },
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  cardLogin: {
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    padding: 25,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 25,
+  },
+  input: {
+    width: '100%',
+    padding: 15,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#ccc',
+    backgroundColor: '#f9f9f9',
+    color: '#000',
+  },
+  button: {
+    backgroundColor: '#C94C4C',
+    paddingVertical: 14,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  botCadastrar: {
+    marginTop: 20,
+    color: '#C94C4C',
+    fontSize: 16,
+    textDecorationLine: 'underline',
+  },
 });
 
 export default RealizarLogin;
